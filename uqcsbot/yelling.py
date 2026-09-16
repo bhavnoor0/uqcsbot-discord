@@ -74,7 +74,7 @@ class Yelling(commands.Cog):
         )
 
     def extract_text(self, msg: discord.Message) -> str:
-        """Extracts the text from user message or poll or forwarded message."""
+        """Extracts the text from message, poll, forwarded message or attachment."""
         extracted_text: List[str] = []
         if msg.content:
             extracted_text.append(msg.content)
@@ -87,6 +87,9 @@ class Yelling(commands.Cog):
         for snapshot in msg.message_snapshots:
             if snapshot.content:
                 extracted_text.append(snapshot.content)
+
+        for attachment in msg.attachments:
+            extracted_text.append(attachment.filename)
 
         return " ".join(extracted_text)
 
